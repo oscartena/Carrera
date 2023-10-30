@@ -54,7 +54,7 @@ public class Pista {
     }
 
     public synchronized void imprimirPista() {
-        // Imprimir el borde superior de la pista
+        // Borde superior de la pista
         for (int i = 0; i < longitudPista + 2; i++) {
             System.out.print("-");
         }
@@ -62,14 +62,14 @@ public class Pista {
 
         // Imprimir las filas de la pista con los corredores
         for (int i = 0; i < numCorredores; i++) {
-            System.out.print("|"); // Borde izquierdo de la pista
+            System.out.print("|");
             for (int j = 0; j < longitudPista; j++) {
                 System.out.print(pista[i][j]); // Imprimir el carácter en esa posición
             }
-            System.out.println("|"); // Borde derecho de la pista
+            System.out.println("|");
         }
 
-        // Imprimir el borde inferior de la pista
+        // Borde inferior de la pista
         for (int i = 0; i < longitudPista + 2; i++) {
             System.out.print("-");
         }
@@ -77,15 +77,15 @@ public class Pista {
     }
     
     public synchronized void actualizarPosicion(Corredor corredor, int nuevaPosicion) {
-        int fila = corredor.getFila(); // Obtener la fila del corredor
-        int posicionAnterior = corredor.getPosicion(); // Obtener la posición anterior del corredor
+        int fila = corredor.getFila();
+        int posicionAnterior = corredor.getPosicion();
 
         // Borrar la posición anterior del corredor
         pista[fila][posicionAnterior] = ' ';
 
         // Actualizar la nueva posición del corredor
         pista[fila][nuevaPosicion] = corredor.getSimbolo();
-        corredor.setPosicion(nuevaPosicion); // Actualizar la posición del corredor
+        corredor.setPosicion(nuevaPosicion);
     }
     
     public boolean llegadaMeta(Corredor c){

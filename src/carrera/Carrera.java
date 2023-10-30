@@ -7,7 +7,6 @@ package carrera;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.CountDownLatch;
 
 /**
  *
@@ -29,7 +28,7 @@ public class Carrera {
         
         Pista pista = new Pista(numCorredores, 100);
         
-        /*for(int i=0; i<numCorredores; i++){
+        for(int i=0; i<numCorredores; i++){
             System.out.println("Introduzca un caracter:");
             simbolo = sc.next().charAt(0);
             System.out.println("Introduzca la velocidad(1-5)");
@@ -38,34 +37,25 @@ public class Carrera {
             turbo = sc.nextInt();
             System.out.println("Introduzca la evasion(1-5)");
             evasion = sc.nextInt();
+            sc.nextLine();
             Corredor c = new Corredor(simbolo, velocidad, turbo, evasion, i);
             pista.agregarCorredor(c);
         }
-        
-        CountDownLatch inicioCarrera = new CountDownLatch(numCorredores);
-        
-        for (Corredor c: pista.getCorredores()){
-            Thread avance  = new Avance(c, pista,inicioCarrera);
-            Thread chocar = new Chocar(c, pista,inicioCarrera);
-            avance.start();
-            chocar.start();
-        }
-        
-        try{
-            inicioCarrera.await();
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
-        */
-        
-            
 
+
+        for (Corredor c: pista.getCorredores()){
+            Thread avance  = new Avance(c, pista);
+            Thread chocar = new Chocar(c, pista);
+            hilos.add(avance);
+            hilos.add(chocar);
+        }
+        /*
         Corredor A = new Corredor('A', 3, 2, 5, 0);
-        Corredor B = new Corredor('B', 2, 4, 4, 1);
-        
+        Corredor B = new Corredor('B', 3, 4, 3, 1);
+
         pista.agregarCorredor(A);
         pista.agregarCorredor(B);
-        
+
         Thread avanceA = new Avance(A, pista);
         Thread avanceB = new Avance(B, pista);
         Thread tropiezoA = new Chocar(A, pista);
@@ -80,13 +70,17 @@ public class Carrera {
         hilos.add(avanceA);
         hilos.add(tropiezoA);
         hilos.add(tropiezoB);
-        
+        */
         
          for (Thread hilo : hilos) {
+                hilo.start();
+        }
+
+        for (Thread hilo : hilos) {
             try {
                 hilo.join();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         

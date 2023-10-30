@@ -4,8 +4,6 @@
  */
 package carrera;
 
-import java.util.concurrent.CountDownLatch;
-
 /**
  *
  * @author oscar
@@ -25,12 +23,12 @@ public class Avance extends Thread {
         while (!pista.llegadaMeta(corredor)) {
         int velocidad = corredor.getVelocidad();
 
-            // Aplicar turbo si es posible
+            // Comprobar si aplica turbo
             if (Math.random() * 10 < corredor.getTurbo()) {
-                velocidad *= 2; // Duplicar la velocidad
+                velocidad *= 2;
             }
 
-            // Calcular el nuevo avance del corredor
+
             int nuevaPosicion = corredor.getPosicion() + velocidad;
             
             if(nuevaPosicion>=pista.getLongitudPista()){
@@ -41,7 +39,7 @@ public class Avance extends Thread {
             pista.actualizarPosicion(corredor, nuevaPosicion);
             pista.imprimirPista();
 
-            // Esperar un segundo antes del próximo movimiento
+            // Esperar un segundo antes del próximo avance
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -51,6 +49,5 @@ public class Avance extends Thread {
         if(pista.getGanador()==null){
             pista.setGanador(corredor);
         }
-        this.interrupt();
     }
 }

@@ -4,8 +4,6 @@
  */
 package carrera;
 
-import java.util.concurrent.CountDownLatch;
-
 /**
  *
  * @author oscar
@@ -24,16 +22,15 @@ public class Chocar extends Thread {
     public void run() {
         while (!pista.llegadaMeta(corredor)) {
             if (Math.random() * 10 < corredor.getEvasion()) {
-                // Corredor tropieza, no avanza en este turno
-                pista.actualizarPosicion(corredor, corredor.getPosicion()); // Mantener la posición actual
+                // Corredor choca, mantiene la posicion
+                pista.actualizarPosicion(corredor, corredor.getPosicion());
             }
-            // Esperar un segundo antes de la siguiente comprobación de tropiezo
+            // Esperar un segundo antes de la siguiente comprobación de choque
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        this.interrupt();
     }
 }
